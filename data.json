@@ -17,7 +17,7 @@
   ],
   "falloutNewVegasSkills": [
     "Barter",
-    "Big Guns",
+    "Guns",
     "Energy Weapons",
     "Explosives",
     "Lockpick",
@@ -25,7 +25,7 @@
     "Melee Weapons",
     "Repair",
     "Science",
-    "Small Guns",
+    "Survival",
     "Sneak",
     "Speech",
     "Unarmed"
@@ -45,7 +45,6 @@
       "No Stimpaks",
       "No Purchases"
     ],
-    "lowImpact": ["No VATS", "No Companions"]
-  },
-  "challengeWeights": ["20", "40", "40"]
+    "lowImpact": ["No V.A.T.S.", "No Companions"]
+  }
 }

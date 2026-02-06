@@ -7,6 +7,7 @@ skillsBool : bool = False
 specialBool : bool = False
 challengesBool : bool = False
 challengeQty = 0
+output = "console"
 
 def setGame(game): 
     playedGame = game;
@@ -31,6 +32,7 @@ def startUp():
     specialDone = False
     challengesDone = False
     challengesQty = True
+    htmlCheck = False
 
     playedGame = "nv"
     #print("Welcome to the Fallout 3/New Vegas Randomizer!")
@@ -62,6 +64,7 @@ def startUp():
                 print("Well that was lucky!... or not?\n")
             case ("2"):
                 specialDone = True
+                specialBool = False
                 print("Letting you choose your own path.\n")
             case _:
                 print("Error parsing, please enter 1 or 2.\n")
@@ -81,10 +84,12 @@ def startUp():
                 print("")
             case ("2"):
                 karmaDone = True
+                karmaBool = False
                 print("Letting you choose your own path.")
                 print("")
             case ("no"):
                 karmaDone = True
+                karmaBool = False
                 print("Letting you choose your own path.")
                 print("")
             case _:
@@ -108,10 +113,12 @@ def startUp():
                 setSkills()
             case ("2"):
                 skillsDone = True
+                skillsBool = False
                 print("Letting you choose your own path.")
                 print("")
             case ("no"):
                 skillsDone = True
+                skillsBool = False
                 print("Letting you choose your own path.")
                 print("")
             case _:
@@ -136,10 +143,12 @@ def startUp():
                 print("")
                 setChallenge()
             case ("2"):
+                challengesBool = False
                 challengesDone = True
                 print("Letting you choose your own path.")
                 print("")
             case ("no"):
+                challengesBool = False
                 challengesDone = True
                 print("Letting you choose your own path.")
                 print("")
@@ -157,20 +166,38 @@ def startUp():
             challegeNum = int(challengesCheck)
             challengeQty = clamp(challegeNum, 1, 3)
             print (f"Adding {challengeQty} challenges.")
+            print("")
 
     if (challengesBool == False):
-        challengeQty = int(0);
-
-    args = [str(karmaBool), str(skillsBool), str(challengesBool), str(challengeQty), str(specialBool), playedGame]
-    print("before Node")
-    runNodeJS(args[0], args[1], args[2], args[3], args[4], args[5])
-
-def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6):
-    print("args py: ", arg1, arg2, arg3, arg4, arg5, arg6);
-    args = [arg1, arg2, arg3, arg4, arg5, arg6]
-    node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6])
+        challengeQty = int(0)
     
-    print("after Node")
+    while (htmlCheck == False):
+        htmlVar = input("Would you like the output as console, json, or HTML?\n1. Console\n2. Json\n3. HTML\n")
+        match (htmlVar):
+            case ("1"):
+                print("Your random class:\n")
+                output = "console"
+                break;
+            case ("2"):
+                print("Outputting to JSON...\n")
+                output = "json"
+                break;
+            case ("3"):
+                print("Creating HTML...\n")
+                output = "html"
+                break;
+            case _:
+                print("Error parsing, please enter 1, 2, or 3.\n")
+                break;
+        
+
+    args = [str(karmaBool), str(skillsBool), str(challengesBool), str(challengeQty), str(specialBool), playedGame, output]
+    runNodeJS(args[0], args[1], args[2], args[3], args[4], args[5], args[6])
+
+def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
+    args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]
+    node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
+    
     pass
      
 def clamp(int : int, min : int, max : int):
