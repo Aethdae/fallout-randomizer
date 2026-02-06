@@ -1,13 +1,13 @@
 console.log("Starting up Node.js...");
 
+const doc = createHTML();
+const jsonData = require("./data.json");
+
 startUp();
 
-const doc = createHTML();
-var jsonData;
-
 async function startUp() {
-  await getJson();
   let args = getArgsFromPy();
+  console.log("args: " + args);
   createSite(args[0], args[1], args[2], args[3], args[4], args[5]);
 }
 
@@ -38,22 +38,6 @@ function createSite(
   );
 }
 
-async function getJson() {
-  try {
-    const jsonUrl = require("./data.json");
-    const response = await fetch(jsonUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP Response: ${response.status}`);
-    }
-    console.log("response: " + response);
-    const result = await response.json();
-    console.log(result);
-    jsonData = result;
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
 function createHeader(game) {}
 function createBody(
   karmaBool,
@@ -67,6 +51,8 @@ function createBody(
   let skills = getSkills();
   let challenges = getChallenges(challengeQty);
   let special = getSpecial();
+
+  console.log(challenges);
 }
 
 function createHTML() {
@@ -91,6 +77,16 @@ function getSpecial() {
 
 function getChallenges(amount) {
   let challenges = [];
+  if (amount == 3) {
+    challenges.push(
+      jsonData.challenges.gameChanger[
+        getRandomNumber(jsonData.challenges.gameChanger.entries.length)
+      ],
+    );
+  } else if (amount == 2) {
+  } else {
+    console.log("1 challenge");
+  }
   return challenges;
 }
 
@@ -110,4 +106,8 @@ function getArgsFromPy() {
     specialBool,
     game,
   ];
+}
+
+function getRandomNumber(upper) {
+  return Math.floor(Math.random() * upper);
 }

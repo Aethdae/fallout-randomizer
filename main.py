@@ -2,10 +2,10 @@ import subprocess
 
 
 playedGame = "nv"
-karmaBool = False
-skillsBool = False
-specialBool = False
-challengesBool = False
+karmaBool : bool = False
+skillsBool : bool = False
+specialBool : bool = False
+challengesBool : bool = False
 challengeQty = 0
 
 def setGame(game): 
@@ -58,6 +58,7 @@ def startUp():
         match (specialInput.lower()):
             case ("1"):
                 specialDone = True
+                specialBool = True
                 print("Well that was lucky!... or not?\n")
             case ("2"):
                 specialDone = True
@@ -70,12 +71,12 @@ def startUp():
         match (karmaCheck.lower()):
             case ("1"):
                 karmaDone = True
-                setKarma()
+                karmaBool = True
                 print("I wonder how you'll treat people?")
                 print("")
             case ("yes"):
                 karmaDone = True
-                setKarma()
+                karmaBool = True
                 print("I wonder how you'll treat people?")
                 print("")
             case ("2"):
@@ -95,11 +96,13 @@ def startUp():
         match (skillsCheck.lower()):
             case ("1"):
                 skillsDone = True
+                skillsBool = True
                 print("Who knows what you'll learn?")
                 print("")
                 setSkills()
             case ("yes"):
                 skillsDone = True
+                skillsBool = True
                 print("Who knows what you'll learn?")
                 print("")
                 setSkills()
@@ -120,12 +123,14 @@ def startUp():
         match (challengesCheck.lower()):
             case ("1"):
                 challengesDone = True
+                challengesBool = True
                 challengesQty = False
                 print("Ooh, a challenge has been accepted!")
                 print("")
                 setChallenge()
             case ("yes"):
                 challengesDone = True
+                challengesBool = True
                 challengesQty = False
                 print("Ooh, a challenge has been accepted!")
                 print("")
@@ -150,19 +155,20 @@ def startUp():
         else:
             challengesQty = True
             challegeNum = int(challengesCheck)
-            challengeQty = challengesCheck
-            print (f"Adding {clamp(challegeNum, 1, 3)} challenges.")
+            challengeQty = clamp(challegeNum, 1, 3)
+            print (f"Adding {challengeQty} challenges.")
 
     if (challengesBool == False):
-        challengeQty = "0"
+        challengeQty = int(0);
 
-    args = [str(karmaBool), str(skillsBool), str(challengesBool), challengeQty, str(specialBool), playedGame]
+    args = [str(karmaBool), str(skillsBool), str(challengesBool), str(challengeQty), str(specialBool), playedGame]
     print("before Node")
     runNodeJS(args[0], args[1], args[2], args[3], args[4], args[5])
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6):
+    print("args py: ", arg1, arg2, arg3, arg4, arg5, arg6);
     args = [arg1, arg2, arg3, arg4, arg5, arg6]
-    node = subprocess.run(["node", "main.js"] + args)
+    node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6])
     
     print("after Node")
     pass
