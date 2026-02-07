@@ -1,21 +1,63 @@
-console.log("Generating build...");
-
 const doc = createHTML();
 const jsonData = require("./data.json");
 const green = "\x1b[32m";
-const strSpacing = "                      ";
-const perSpacing = "                    ";
-const endSpacing = "                     ";
-const chaSpacing = "                      ";
-const intSpacing = "                  ";
-const agiSpacing = "                        ";
-const luckSpacing = "                            ";
+const fillerText = [
+  "▌",
+  "■",
+  "▬",
+  "█",
+  "▐",
+  "p",
+  "[",
+  "]",
+  "{",
+  "}",
+  "(",
+  ")",
+  "/",
+  ".",
+  ",",
+  ";",
+  ":",
+  "0",
+  "1",
+  "b",
+  "c",
+  "a",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "q",
+  "z",
+  "-",
+  "=",
+  "►",
+  "◄",
+  "▌",
+  "■",
+  "▬",
+  "█",
+  "▐",
+  "▌",
+  "■",
+  "▬",
+  "█",
+  "▐",
+];
 
 startUp();
 
 function startUp() {
   let args = getArgsFromPy();
-  //console.log("args: " + args);
   createClass(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
 }
 
@@ -33,20 +75,19 @@ function createClass(
     karma = getKarma();
   }
 
-  let skills = [];
+  let skills = ["N/A", "N/A", "N/A"];
   if (skillsBool) {
     skills = getSkills(game);
   }
-  let challenges = [];
+  let challenges = ["N/A", "N/A", "N/A"];
   if (challengesBool) {
     challenges = getChallenges(challengeQty);
   }
-  let special = [];
+  let special;
   if (specialBool) {
     special = getSpecial();
   }
 
-  console.log(challenges, karma, skills, special);
   switch (output) {
     case "html":
       createHeader(game);
@@ -58,16 +99,10 @@ function createClass(
         specialBool,
         game,
       );
-      console.log(
-        karmaBool,
-        skillsBool,
-        challengesBool,
-        challengeQty,
-        specialBool,
-        game,
-      );
       break;
     case "console":
+      console.clear();
+      console.log("Generating build...");
       console.log(
         green + `${getBuildForConsole(karma, skills, challenges, special)}`,
       );
@@ -89,15 +124,21 @@ function getBuildForConsole(karma, skills, challenges, special) {
   while (challenges.length < 3) {
     challenges.push("N/A");
   }
+  if (special == undefined) {
+    special = ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"];
+  }
 
-  let str = `
-  Strength: ${special[0]}${strSpacing} Challenges${strSpacing}Skills:\n
-  Perception: ${special[1]}${perSpacing}-------------${intSpacing}-------------\n
-  Endurance: ${special[2]}${endSpacing}${challenges[0]}${strSpacing}${skills[0]}\n
-  Charisma: ${special[3]}${chaSpacing}${challenges[1]}${strSpacing}${skills[1]}\n
-  Intelligence: ${special[4]}${intSpacing}${challenges[2]}${intSpacing}${skills[2]}\n
-  Agility: ${special[5]}${agiSpacing}   Karma:${strSpacing}\n
-  Luck: ${special[6]}${luckSpacing}   ${karma}
+  let str = `  ${createTerminalFiller(58)}\n
+  ${createTerminalFiller(58)}\n
+  ${createTerminalFiller(9)}Strength: ${special[0]}${getSpaces(0, 68)}${createTerminalFiller(9)}\n
+  ${createTerminalFiller(9)}Perception: ${special[1]}${getSpaces(0, 7)}Challenges           Skills               Karma${getSpaces(0, 12)}${createTerminalFiller(9)}\n
+  ${createTerminalFiller(9)}Endurance: ${special[2]}${getSpaces(0, 8)}-------------       -------------       -------------      ${createTerminalFiller(9)}\n
+  ${createTerminalFiller(9)}Charisma: ${special[3]}${getSpaces(0, 9)}${challenges[0]}${getSpaces(challenges[0].length)}${skills[0]}${getSpaces(skills[0].length)}${karma}${getSpaces(karma.length, 18)}${createTerminalFiller(9)}\n
+  ${createTerminalFiller(9)}Intelligence: ${special[4]}${getSpaces(0, 5)}${challenges[1]}${getSpaces(challenges[1].length)}${skills[1]}${getSpaces(skills[1].length, 38)}${createTerminalFiller(9)}\n
+  ${createTerminalFiller(9)}Agility: ${special[5]}${getSpaces(0, 10)}${challenges[2]}${getSpaces(challenges[2].length)}${skills[2]}${getSpaces(skills[2].length, 38)}${createTerminalFiller(9)}\n
+  ${createTerminalFiller(9)}Luck: ${special[6]}${getSpaces(0, 72)}${createTerminalFiller(9)}\n
+  ${createTerminalFiller(58)}\n
+  ${createTerminalFiller(58)}\n
   `;
   return str;
 }
@@ -220,7 +261,7 @@ function getArgsFromPy() {
   let skillsBool = process.argv[3].toLowerCase() == "true";
   let challengesBool = process.argv[4].toLowerCase() == "true";
   let challengeQty = parseInt(process.argv[5]);
-  let specialBool = process.argv[6].toLowerCase == "true";
+  let specialBool = process.argv[6].toLowerCase() == "true";
   let game = process.argv[7].toLowerCase();
   let output = process.argv[8].toLowerCase();
 
@@ -237,4 +278,24 @@ function getArgsFromPy() {
 
 function getRandomNumber(upper) {
   return Math.floor(Math.random() * upper);
+}
+
+function getSpaces(minusLength, spaceQty = 20) {
+  let str = "";
+
+  for (let x = 0; x < spaceQty - minusLength; x++) {
+    str += " ";
+  }
+  //str = str.slice(0, str.length - length);
+  return str;
+}
+
+function createTerminalFiller(size) {
+  let str = "";
+  for (let x = 0; x < size; x++) {
+    str += fillerText[getRandomNumber(fillerText.length)];
+    str += " ";
+  }
+  str += " ";
+  return str;
 }

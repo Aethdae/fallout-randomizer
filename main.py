@@ -35,7 +35,6 @@ def startUp():
     htmlCheck = False
 
     playedGame = "nv"
-    #print("Welcome to the Fallout 3/New Vegas Randomizer!")
     while (gameDone == False):
         gameInput = input("Which game are you playing?\n1. Fallout 3\n2. Fallout: New Vegas\n")
         match (gameInput.lower()):
@@ -165,7 +164,7 @@ def startUp():
             challengesQty = True
             challegeNum = int(challengesCheck)
             challengeQty = clamp(challegeNum, 1, 3)
-            print (f"Adding {challengeQty} challenges.")
+            print(f"Adding {challengeQty} challenges.")
             print("")
 
     if (challengesBool == False):
@@ -175,7 +174,6 @@ def startUp():
         htmlVar = input("Would you like the output as console, json, or HTML?\n1. Console\n2. Json\n3. HTML\n")
         match (htmlVar):
             case ("1"):
-                print("Your random class:\n")
                 output = "console"
                 break;
             case ("2"):
@@ -190,14 +188,12 @@ def startUp():
                 print("Error parsing, please enter 1, 2, or 3.\n")
                 break;
         
-
     args = [str(karmaBool), str(skillsBool), str(challengesBool), str(challengeQty), str(specialBool), playedGame, output]
     runNodeJS(args[0], args[1], args[2], args[3], args[4], args[5], args[6])
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]
     node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
-    
     pass
      
 def clamp(int : int, min : int, max : int):
