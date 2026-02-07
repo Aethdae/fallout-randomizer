@@ -190,6 +190,9 @@ def startUp():
         
     args = [str(karmaBool), str(skillsBool), str(challengesBool), str(challengeQty), str(specialBool), playedGame, output]
     runNodeJS(args[0], args[1], args[2], args[3], args[4], args[5], args[6])
+    finalBool = False
+    while (finalBool == False):
+        final = input("Press enter to close...")
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]

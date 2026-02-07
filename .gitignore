@@ -1,4 +1,7 @@
 node_modules
+build
+dist
 *.txt
 *.html
 *.css
+*.spec
