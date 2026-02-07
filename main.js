@@ -1,3 +1,4 @@
+const fs = require("fs");
 const doc = createHTML();
 const jsonData = require("./data.json");
 const green = "\x1b[32m";
@@ -91,14 +92,7 @@ function createClass(
   switch (output) {
     case "html":
       createHeader(game);
-      createBody(
-        karmaBool,
-        skillsBool,
-        challengesBool,
-        challengeQty,
-        specialBool,
-        game,
-      );
+      createBody(karma, skills, challenges, special, game);
       break;
     case "console":
       console.clear();
@@ -108,6 +102,7 @@ function createClass(
       );
       break;
     case "json":
+      createJson(karma, skills, challenges, special, game);
       //create json file and output to dir?
       break;
   }
@@ -143,14 +138,7 @@ function getBuildForConsole(karma, skills, challenges, special) {
   return str;
 }
 function createHeader(game) {}
-function createBody(
-  karmaBool,
-  skillsBool,
-  challengesBool,
-  challengeQty,
-  specialBool,
-  game,
-) {}
+function createBody(karma, skills, challenges, special, game) {}
 
 function createHTML() {
   return 3;
@@ -298,4 +286,22 @@ function createTerminalFiller(size) {
   }
   str += " ";
   return str;
+}
+
+function createJson(karma, skills, challenges, special, game) {
+  const jsonObj = {
+    karma: karma,
+    skills: skills,
+    challenges: challenges,
+    special: special,
+    game: game,
+  };
+
+  const json = JSON.stringify(jsonObj);
+  console.log(json);
+  fs.writeFile("class.txt", json, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
 }

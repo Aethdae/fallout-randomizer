@@ -69,7 +69,7 @@ def startUp():
                 print("Error parsing, please enter 1 or 2.\n")
                 
     while (karmaDone == False):
-        karmaCheck = input("Would you like to randomize karma? (Y/N)\n1. Yes\n2. No\n")
+        karmaCheck = input("Would you like to randomize karma?\n1. Yes\n2. No\n")
         match (karmaCheck.lower()):
             case ("1"):
                 karmaDone = True
