@@ -1,5 +1,6 @@
 const fs = require("fs");
-const doc = createHTML();
+const doc = new Document();
+doc.createElement();
 const jsonData = require("./data.json");
 const green = "\x1b[38;5;46m";
 const orange = "\x1b[38;5;215m";
