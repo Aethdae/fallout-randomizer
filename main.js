@@ -297,8 +297,7 @@ function createJson(karma, skills, challenges, special, game) {
     game: game,
   };
 
-  const json = JSON.stringify(jsonObj);
-  console.log(json);
+  const json = JSON.stringify(jsonObj, null, 2);
   fs.writeFile("class.txt", json, function (err) {
     if (err) {
       console.log(err);

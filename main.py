@@ -178,6 +178,7 @@ def startUp():
                 break;
             case ("2"):
                 print("Outputting to JSON...\n")
+                print("Your random build can be found at class.txt in the same folder.")
                 output = "json"
                 break;
             case ("3"):
@@ -193,6 +194,9 @@ def startUp():
     finalBool = False
     while (finalBool == False):
         final = input("Press enter to close...")
+        if (final == ""):
+            finalBool = True
+            
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]
