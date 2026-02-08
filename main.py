@@ -200,7 +200,7 @@ def startUp():
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]
-    node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
+    node = subprocess.run(["main.exe", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
     pass
      
 def clamp(int : int, min : int, max : int):
