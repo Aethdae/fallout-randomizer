@@ -1,7 +1,8 @@
 const fs = require("fs");
 const doc = createHTML();
 const jsonData = require("./data.json");
-const green = "\x1b[32m";
+const green = "\x1b[38;5;46m";
+const orange = "\x1b[38;5;215m";
 const fillerText = [
   "▌",
   "■",
@@ -98,13 +99,23 @@ function createClass(
       console.clear();
       console.log("Generating build...");
       console.log(
-        green + `${getBuildForConsole(karma, skills, challenges, special)}`,
+        `${getColor(game)}` +
+          `${getBuildForConsole(karma, skills, challenges, special)}`,
       );
       break;
     case "json":
       createJson(karma, skills, challenges, special, game);
       //create json file and output to dir?
       break;
+  }
+}
+
+function getColor(game) {
+  switch (game) {
+    case "3":
+      return green;
+    case "nv":
+      return orange;
   }
 }
 function getBuildForConsole(karma, skills, challenges, special) {
