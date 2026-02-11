@@ -84,10 +84,7 @@ function createClass(
   if (challengesBool) {
     challenges = getChallenges(challengeQty);
   }
-  let special;
-  if (specialBool) {
-    special = getSpecial();
-  }
+  special = getSpecial(specialBool);
 
   switch (output) {
     case "html":
@@ -130,9 +127,6 @@ function getBuildForConsole(karma, skills, challenges, special) {
   }
   while (challenges.length < 3) {
     challenges.push("N/A");
-  }
-  if (special == undefined) {
-    special = ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"];
   }
 
   let str = `  ${createTerminalFiller(58)}\n
@@ -177,17 +171,21 @@ function getSkills(game) {
   return skills;
 }
 
-function getSpecial() {
-  let special = [1, 1, 1, 1, 1, 1, 1];
-  let x = 0;
-  while (x < 33) {
-    let rand = getRandomNumber(7);
-    if (special[rand] < 10) {
-      special[rand]++;
-      x++;
+function getSpecial(specialBool) {
+  if (specialBool) {
+    let special = [1, 1, 1, 1, 1, 1, 1];
+    let x = 0;
+    while (x < 33) {
+      let rand = getRandomNumber(7);
+      if (special[rand] < 10) {
+        special[rand]++;
+        x++;
+      }
     }
+    return special;
+  } else {
+    return ["N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A"];
   }
-  return special;
 }
 
 function getChallenges(amount) {
@@ -196,17 +194,17 @@ function getChallenges(amount) {
   if (amount == 3) {
     challenges.push(
       jsonData.challenges.gameChanger[
-        getRandomNumber(jsonData.challenges.gameChanger.entries.length)
+        getRandomNumber(jsonData.challenges.gameChanger.length)
       ],
     );
     challenges.push(
       jsonData.challenges.impactful[
-        getRandomNumber(jsonData.challenges.impactful.entries.length)
+        getRandomNumber(jsonData.challenges.impactful.length)
       ],
     );
     challenges.push(
       jsonData.challenges.lowImpact[
-        getRandomNumber(jsonData.challenges.lowImpact.entries.length)
+        getRandomNumber(jsonData.challenges.lowImpact.length)
       ],
     );
   } else if (amount == 2) {
@@ -239,6 +237,8 @@ function getChallenges(amount) {
     challenges.push(
       startChallenges[0][getRandomNumber(startChallenges[0].length)],
     );
+  } else if (amount == 0) {
+    return ["N/A", "N/A", "N/A"];
   }
   return challenges;
 }

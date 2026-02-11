@@ -52,6 +52,18 @@
       "No Purchases",
       "Steal >30% Items"
     ],
-    "lowImpact": ["No V.A.T.S.", "No Companions", "No Meds", "No Drugs", "Vegan", "Outdoors Only", "Carnivore Diet", "NCR Route", "Legion Route", "Yes Man Route", "No Fast-travel"]
+    "lowImpact": [
+      "No V.A.T.S.",
+      "No Companions",
+      "No Meds",
+      "No Drugs",
+      "Vegan",
+      "Outdoors Only",
+      "Carnivore Diet",
+      "NCR Route",
+      "Legion Route",
+      "Yes Man Route",
+      "No Fast-travel"
+    ]
   }
 }
