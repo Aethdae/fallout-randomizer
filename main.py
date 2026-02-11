@@ -171,20 +171,27 @@ def startUp():
         challengeQty = int(0)
     
     while (htmlCheck == False):
-        htmlVar = input("Would you like the output as console, json, or HTML?\n1. Console\n2. Json\n3. HTML\n")
+        htmlVar = input("Would you like the output as console, json, or HTML?\n1. Console\n2. Json\n3. HTML\n4. Text\n")
         match (htmlVar):
             case ("1"):
                 output = "console"
+                htmlCheck = True
                 break;
             case ("2"):
                 print("Outputting to JSON...\n")
                 print("Your random build can be found at class.txt in the same folder.")
                 output = "json"
+                htmlCheck = True
                 break;
             case ("3"):
                 print("Creating HTML...\n")
                 output = "html"
+                htmlCheck = True
                 break;
+            case ("4"):
+                print("Creating text file...\n")
+                output = "text";
+                htmlCheck = True
             case _:
                 print("Error parsing, please enter 1, 2, or 3.\n")
                 break;
@@ -200,7 +207,8 @@ def startUp():
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]
-    node = subprocess.run(["_internal/js.exe", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
+    #node = subprocess.run(["_internal/js.exe", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
+    node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
     pass
      
 def clamp(int : int, min : int, max : int):

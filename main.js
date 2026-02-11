@@ -1,6 +1,6 @@
 const fs = require("fs");
-const doc = new Document();
-doc.createElement();
+//const doc = new Document();
+//doc.createElement();
 const jsonData = require("./data.json");
 const green = "\x1b[38;5;46m";
 const orange = "\x1b[38;5;215m";
@@ -106,7 +106,9 @@ function createClass(
       break;
     case "json":
       createJson(karma, skills, challenges, special, game);
-      //create json file and output to dir?
+      break;
+    case "text":
+      createText(karma, skills, challenges, special, game);
       break;
   }
 }
@@ -310,7 +312,25 @@ function createJson(karma, skills, challenges, special, game) {
   };
 
   const json = JSON.stringify(jsonObj, null, 2);
-  fs.writeFile("class.txt", json, function (err) {
+  fs.writeFile("class.json", json, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+
+function createText(karma, skills, challenges, special, game) {
+  let gameType = "";
+  switch (game) {
+    case "nv":
+      gameType = "Fallout New Vegas";
+      break;
+    case "3":
+      gameType = "Fallout 3";
+      break;
+  }
+  const text = `# Random Build for ${gameType}\n\n# Karma:\n${karma}\n\n# Skills:\n${skills[0]}\n${skills[1]}\n${skills[2]}\n\n# Challenges:\n${challenges[0]}\n${challenges[1]}\n${challenges[2]}\n\n# SPECIAL:\nStrength: ${special[0]}\nPerception: ${special[1]}\nEndurance: ${special[2]}\nCharisma: ${special[3]}\nIntelligence: ${special[4]}\nAgility: ${special[5]}\nLuck: ${special[6]}`;
+  fs.writeFile("class.txt", text, function (err) {
     if (err) {
       console.log(err);
     }
