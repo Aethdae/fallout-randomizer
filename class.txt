@@ -1,0 +1,23 @@
+#Random Build for Fallout New Vegas
+
+# Karma:
+
+
+# Skills:
+N/A
+N/A
+N/A
+
+# Challenges:
+Big Guns Only
+No Lockpicking
+No V.A.T.S.
+
+# SPECIAL:
+Strength: 7
+Perception: 6
+Endurance: 4
+Charisma: 8
+Intelligence: 4
+Agility: 6
+Luck: 5
