@@ -1,6 +1,4 @@
 const fs = require("fs");
-//const doc = new Document();
-//doc.createElement();
 const jsonData = require("./data.json");
 const green = "\x1b[38;5;46m";
 const orange = "\x1b[38;5;215m";
@@ -93,8 +91,8 @@ function createClass(
 
   switch (output) {
     case "html":
-      createHeader(game);
-      createBody(karma, skills, challenges, special, game);
+      createHTML(karma, skills, challenges, special, game);
+      createCss();
       break;
     case "console":
       console.clear();
@@ -150,13 +148,6 @@ function getBuildForConsole(karma, skills, challenges, special) {
   ${createTerminalFiller(58)}\n
   `;
   return str;
-}
-function createHeader(game) {}
-function createBody(karma, skills, challenges, special, game) {}
-
-function createHTML() {
-  return 3;
-  //return new HTMLHtmlElement();
 }
 
 function getKarma() {
@@ -312,7 +303,7 @@ function createJson(karma, skills, challenges, special, game) {
   };
 
   const json = JSON.stringify(jsonObj, null, 2);
-  fs.writeFile("class.json", json, function (err) {
+  fs.writeFile("build.json", json, function (err) {
     if (err) {
       console.log(err);
     }
@@ -330,7 +321,189 @@ function createText(karma, skills, challenges, special, game) {
       break;
   }
   const text = `# Random Build for ${gameType}\n\n# Karma:\n${karma}\n\n# Skills:\n${skills[0]}\n${skills[1]}\n${skills[2]}\n\n# Challenges:\n${challenges[0]}\n${challenges[1]}\n${challenges[2]}\n\n# SPECIAL:\nStrength: ${special[0]}\nPerception: ${special[1]}\nEndurance: ${special[2]}\nCharisma: ${special[3]}\nIntelligence: ${special[4]}\nAgility: ${special[5]}\nLuck: ${special[6]}`;
-  fs.writeFile("class.txt", text, function (err) {
+  fs.writeFile("build.txt", text, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+
+function createHTML(karma, skills, challenges, special, game) {
+  let gameType = "";
+  switch (game) {
+    case "nv":
+      gameType = "Fallout New Vegas";
+      break;
+    case "3":
+      gameType = "Fallout 3";
+      break;
+  }
+  let htmlStr = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Build</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 id="headerText">
+        Random Fallout Build for <span id="header">${gameType}</span>
+      </h1>
+    </header>
+    <main>
+      <section class="classContainer">
+        <div class="classCard" id="specialCard">
+          <div class="cardHeader"><h2>Special</h2></div>
+          <div class="cardList">
+            <ul>
+              <li id="strength">Strength: ${special[0]}</li>
+              <li id="perception">Perception: ${special[1]}</li>
+              <li id="endurance">Endurance: ${special[2]}</li>
+              <li id="charisma">Charisma: ${special[3]}</li>
+              <li id="intelligence">Intelligence: ${special[4]}</li>
+              <li id="agility">Agility: ${special[5]}</li>
+              <li id="luck">Luck: ${special[6]}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="classCard" id="skillsCard">
+          <div class="cardHeader"><h2>Skills</h2></div>
+          <div class="cardList">
+            <ul>
+              <li id="skill-0">${skills[0]}</li>
+              <li id="skill-1">${skills[1]}</li>
+              <li id="skill-2">${skills[2]}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="classCard" id="challengesCard">
+          <div class="cardHeader"><h2>Challenges</h2></div>
+          <div class="cardList">
+            <ul>
+              <li id="challenge-0">${challenges[0]}</li>
+              <li id="challenge-1">${challenges[1]}</li>
+              <li id="challenge-2">${challenges[2]}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="classCard" id="karmaCard">
+          <div class="cardHeader"><h2>Karma</h2></div>
+          <div class="cardList">
+            <ul>
+              <li id="karma">${karma}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer">
+        <p>
+          Made with
+          <a href="https://github.com/Aethdae/fallout-randomizer"
+            >Fallout Randomizer</a
+          >
+          - Aethdae
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+`;
+
+  fs.writeFile("build.html", htmlStr, function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+
+function createCss() {
+  let cssStr = `:root {
+  --nV-color: rgb(255, 207, 74);
+  --fo3-color: rgb(8, 252, 8);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #222;
+}
+li {
+  list-style: none;
+}
+
+h1 {
+  background-color: #666;
+  text-align: center;
+}
+
+.classContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-left: 10px;
+}
+
+.classCard {
+  background-color: #111;
+  color: var(--nV-color);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  width: 240px;
+  border-radius: 8px;
+}
+
+.cardList {
+  background-color: #333;
+  padding: 8px;
+  border-radius: 4px;
+  border: var(--nV-color) 2px solid;
+  width: 60%;
+  text-align: center;
+}
+
+.cardHeader {
+  padding: 8px;
+  background-color: #333;
+  margin-bottom: 10px;
+  border: var(--nV-color) 2px dotted;
+  border-radius: 4px;
+  width: 80%;
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+}
+footer p {
+  text-align: center;
+  display: block;
+  color: var(--fo3-color);
+  margin-top: 8px;
+}
+footer a:link {
+  color: var(--nV-color);
+}
+`;
+
+  fs.writeFile("style.css", cssStr, function (err) {
     if (err) {
       console.log(err);
     }

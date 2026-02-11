@@ -179,17 +179,19 @@ def startUp():
                 break;
             case ("2"):
                 print("Outputting to JSON...\n")
-                print("Your random build can be found at class.txt in the same folder.")
+                print("Your random build can be found at build.json in the same folder.")
                 output = "json"
                 htmlCheck = True
                 break;
             case ("3"):
                 print("Creating HTML...\n")
+                print("Your random build can be found at build.html in the same folder.")
                 output = "html"
                 htmlCheck = True
                 break;
             case ("4"):
                 print("Creating text file...\n")
+                print("Your random build can be found at build.txt in the same folder.")
                 output = "text";
                 htmlCheck = True
             case _:
@@ -207,8 +209,8 @@ def startUp():
 
 def runNodeJS(arg1, arg2, arg3, arg4, arg5, arg6, arg7):
     args = [arg1, arg2, arg3, arg4, arg5, arg6, arg7]
-    #node = subprocess.run(["_internal/js.exe", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
-    node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
+    node = subprocess.run(["_internal/js.exe", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
+    #node = subprocess.run(["node", "main.js", arg1, arg2, arg3, arg4, arg5, arg6, arg7])
     pass
      
 def clamp(int : int, min : int, max : int):
