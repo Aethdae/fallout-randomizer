@@ -1,0 +1,8 @@
+node_modules
+fallout-randomizer
+build
+*.txt
+*.html
+*.css
+*.spec
+*.7z
