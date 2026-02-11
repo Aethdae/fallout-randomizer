@@ -36,15 +36,22 @@
       "Pistols Only",
       "Shotguns Only",
       "Explosives Only",
-      "Melee Only"
+      "Melee Only",
+      "Pacifist",
+      "Kill Everyone",
+      "Steal Every Item",
+      "Steal >70% Items",
+      "Kill 50%",
+      "Hardcore"
     ],
     "impactful": [
       "No Lockpicking",
       "No Pickpocketing",
       "No Hacking",
       "No Stimpaks",
-      "No Purchases"
+      "No Purchases",
+      "Steal >30% Items"
     ],
-    "lowImpact": ["No V.A.T.S.", "No Companions"]
+    "lowImpact": ["No V.A.T.S.", "No Companions", "No Meds", "No Drugs", "Vegan", "Outdoors Only", "Carnivore Diet", "NCR Route", "Legion Route", "Yes Man Route", "No Fast-travel"]
   }
 }
